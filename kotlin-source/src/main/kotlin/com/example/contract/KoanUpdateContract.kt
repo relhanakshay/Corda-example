@@ -15,4 +15,6 @@ open class KoanUpdateContract : Contract{
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    //hello
+
 }
