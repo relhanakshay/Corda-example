@@ -1,11 +1,11 @@
 package com.example.contract
 
+//import com.example.state.IOUState
 import com.example.state.IOUState
-import net.corda.core.contracts.CommandData
-import net.corda.core.contracts.Contract
-import net.corda.core.contracts.requireSingleCommand
-import net.corda.core.contracts.requireThat
+import com.example.state.TokenState
+import net.corda.core.contracts.*
 import net.corda.core.transactions.LedgerTransaction
+
 
 /**
  * A implementation of a basic smart contract in Corda.
@@ -19,19 +19,26 @@ import net.corda.core.transactions.LedgerTransaction
  *
  * All contracts must sub-class the [Contract] interface.
  */
+
+
+
+
+
+
 open class IOUContract : Contract {
     companion object {
         @JvmStatic
         val IOU_CONTRACT_ID = "com.example.contract.IOUContract"
     }
 
-    /**
-     * The verify() function of all the states' contracts must not throw an exception for a transaction to be
-     * considered valid.
-     */
+
+     //The verify() function of all the states' contracts must not throw an exception for a transaction to be
+     //considered valid.
+
     override fun verify(tx: LedgerTransaction) {
         val command = tx.commands.requireSingleCommand<Commands.Create>()
         requireThat {
+
             // Generic constraints around the IOU transaction.
             "No inputs should be consumed when issuing an IOU." using (tx.inputs.isEmpty())
             "Only one output state should be created." using (tx.outputs.size == 1)
@@ -44,9 +51,9 @@ open class IOUContract : Contract {
         }
     }
 
-    /**
-     * This contract only implements one command, Create.
-     */
+
+     // This contract only implements one command, Create.
+
     interface Commands : CommandData {
         class Create : Commands
     }

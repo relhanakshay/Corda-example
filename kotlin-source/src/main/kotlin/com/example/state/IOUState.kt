@@ -1,14 +1,17 @@
 package com.example.state
 
 import com.example.schema.IOUSchemaV1
-import net.corda.core.contracts.ContractState
-import net.corda.core.contracts.LinearState
-import net.corda.core.contracts.UniqueIdentifier
+import io.cordite.cielonacio.token.schema.TokenSchemaV1
+import net.corda.core.contracts.*
 import net.corda.core.identity.AbstractParty
 import net.corda.core.identity.Party
 import net.corda.core.schemas.MappedSchema
 import net.corda.core.schemas.PersistentState
 import net.corda.core.schemas.QueryableState
+import net.corda.core.utilities.toBase58String
+import java.util.*
+
+import net.corda.core.serialization.CordaSerializable
 
 /**
  * The state object recording IOU agreements between two parties.
@@ -19,12 +22,15 @@ import net.corda.core.schemas.QueryableState
  * @param lender the party issuing the IOU.
  * @param borrower the party receiving and approving the IOU.
  */
+
 data class IOUState(val value: Int,
                     val lender: Party,
                     val borrower: Party,
                     override val linearId: UniqueIdentifier = UniqueIdentifier()):
         LinearState, QueryableState {
-    /** The public keys of the involved parties. */
+
+/* The public keys of the involved parties. */
+
     override val participants: List<AbstractParty> get() = listOf(lender, borrower)
 
     override fun generateMappedObject(schema: MappedSchema): PersistentState {
@@ -41,3 +47,7 @@ data class IOUState(val value: Int,
 
     override fun supportedSchemas(): Iterable<MappedSchema> = listOf(IOUSchemaV1)
 }
+
+
+
+
